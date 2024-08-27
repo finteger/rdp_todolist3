@@ -75,7 +75,6 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       body: Container(
-        height: 300,
         child: Column(
           children: [
             TableCalendar(
@@ -86,6 +85,7 @@ class _HomePageState extends State<HomePage> {
               lastDay: DateTime(2025),
             ),
             ListView.builder(
+              shrinkWrap: true,
               itemCount: tasks.length,
               itemBuilder: (BuildContext context, int index) {
                 return SingleChildScrollView(child: Placeholder());

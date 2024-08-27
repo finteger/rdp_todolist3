@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -70,6 +71,26 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(
                   fontFamily: 'Caveat', fontSize: 32, color: Colors.white),
             ),
+          ],
+        ),
+      ),
+      body: Container(
+        height: 300,
+        child: Column(
+          children: [
+            TableCalendar(
+              calendarFormat: CalendarFormat.month,
+              headerVisible: true,
+              focusedDay: DateTime.now(),
+              firstDay: DateTime(2023),
+              lastDay: DateTime(2025),
+            ),
+            ListView.builder(
+              itemCount: tasks.length,
+              itemBuilder: (BuildContext context, int index) {
+                return SingleChildScrollView(child: Placeholder());
+              },
+            )
           ],
         ),
       ),

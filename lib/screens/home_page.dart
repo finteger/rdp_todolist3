@@ -12,7 +12,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   FirebaseFirestore db = FirebaseFirestore.instance;
 
-  final List<String> tasks = <String>['Study for Exam', 'Do dishes.'];
+  final List<String> tasks = <String>[];
   final List<bool> checkboxes = List.generate(8, (index) => false);
   TextEditingController nameController = TextEditingController();
 
@@ -29,6 +29,7 @@ class _HomePageState extends State<HomePage> {
 
     setState(() {
       tasks.insert(0, taskName);
+      checkboxes.insert(0, false);
     });
   }
 
@@ -186,8 +187,11 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             Padding(
-              padding: EdgeInsets.all(3.0),
+              padding: EdgeInsets.all(4.0),
               child: ElevatedButton(
+                onPressed: () {
+                  addItemToList();
+                },
                 style: ButtonStyle(
                   backgroundColor: WidgetStatePropertyAll(Colors.blue),
                 ),
@@ -195,9 +199,6 @@ class _HomePageState extends State<HomePage> {
                   'Add To-Do List Item',
                   style: TextStyle(color: Colors.white),
                 ),
-                onPressed: () {
-                  addItemToList();
-                },
               ),
             ),
           ],

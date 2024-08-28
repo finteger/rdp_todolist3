@@ -161,14 +161,44 @@ class _HomePageState extends State<HomePage> {
                       controller: nameController,
                       maxLength: 20,
                       decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(16),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          )),
+                        contentPadding: EdgeInsets.all(23),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        labelText: 'Add To-Do List Item',
+                        labelStyle: TextStyle(
+                          fontSize: 26,
+                          color: Colors.blue,
+                        ),
+                        hintText: 'Enter your task here',
+                        hintStyle: TextStyle(
+                          color: Colors.grey,
+                        ),
+                      ),
                     ),
                   ),
                 ),
+                const IconButton(
+                  icon: Icon(Icons.clear),
+                  onPressed: null,
+                  //To-Do clearTextField()
+                ),
               ],
+            ),
+            Padding(
+              padding: EdgeInsets.all(3.0),
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll(Colors.blue),
+                ),
+                child: Text(
+                  'Add To-Do List Item',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () {
+                  addItemToList();
+                },
+              ),
             ),
           ],
         ),

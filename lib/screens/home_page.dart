@@ -100,23 +100,27 @@ class _HomePageState extends State<HomePage> {
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Icon(
+                            size: 44,
                             !checkboxes[index]
                                 ? Icons.manage_history
                                 : Icons.playlist_add_check_circle,
                           ),
                           SizedBox(width: 18),
-                          Text(
-                            '${tasks[index]}',
-                            style: checkboxes[index]
-                                ? TextStyle(
-                                    decoration: TextDecoration.lineThrough,
-                                    fontSize: 20,
-                                    color: Colors.black.withOpacity(0.5),
-                                  )
-                                : TextStyle(fontSize: 20),
+                          Expanded(
+                            child: Text(
+                              '${tasks[index]}',
+                              style: checkboxes[index]
+                                  ? TextStyle(
+                                      decoration: TextDecoration.lineThrough,
+                                      fontSize: 25,
+                                      color: Colors.black.withOpacity(0.5),
+                                    )
+                                  : TextStyle(fontSize: 25),
+                              textAlign: TextAlign.left,
+                            ),
                           ),
                           Row(
                             children: [
@@ -129,6 +133,7 @@ class _HomePageState extends State<HomePage> {
                                     //To-Do: updateTaskCompletionStatus()
                                   }),
                               const IconButton(
+                                iconSize: 30,
                                 icon: Icon(Icons.delete),
                                 onPressed: null,
                               ),

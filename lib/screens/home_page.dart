@@ -161,8 +161,10 @@ class _HomePageState extends State<HomePage> {
                       controller: nameController,
                       maxLength: 20,
                       decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(16),
-                      ),
+                          contentPadding: EdgeInsets.all(16),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          )),
                     ),
                   ),
                 ),

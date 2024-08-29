@@ -57,6 +57,33 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  Future<void> fetchTasksFromFirestore() async {
+    //Get a reference to the 'tasks' collection from Firestore
+    CollectionReference tasksCollection = db.collection('tasks');
+
+    //Fetch the documents (tasks) from the collection
+    QuerySnapshot querySnapshot = await tasksCollection.get();
+
+    //Create an empty list to store the fetched task names
+    List<String> fetchedTasks = [];
+
+    //Look through each doc (task) in the querySnapshot object
+    for (QueryDocumentSnapshot docSnapshot in querySnapshot.docs) {
+      //Get the task name from the data
+      String taskName = docSnapshot.get('name');
+
+      //Get the completion status from the data
+      String completed = docSnapshot.get('completed');
+
+      //Add the tasks to the fetched tasks
+      fetchedTasks.add(taskName);
+    }
+    setState(() {
+      tasks.clear();
+      tasks.addAll(fetchedTasks);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,11 +167,13 @@ class _HomePageState extends State<HomePage> {
                                         //To-Do: updateTaskCompletionStatus()
                                       }),
                                 ),
-                                const IconButton(
+                                IconButton(
                                   color: Colors.black,
                                   iconSize: 30,
                                   icon: Icon(Icons.delete),
-                                  onPressed: null,
+                                  onPressed: () {
+                                    removeItems(index);
+                                  },
                                 ),
                               ],
                             ),
@@ -181,7 +210,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  const IconButton(
+                  IconButton(
                     icon: Icon(Icons.clear),
                     onPressed: null,
                     //To-Do clearTextField()

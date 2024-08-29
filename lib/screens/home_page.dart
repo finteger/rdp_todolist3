@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
       String taskName = docSnapshot.get('name');
 
       //Get the completion status from the data
-      String completed = docSnapshot.get('completed');
+      bool completed = docSnapshot.get('completed');
 
       //Add the tasks to the fetched tasks
       fetchedTasks.add(taskName);
@@ -81,6 +81,44 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       tasks.clear();
       tasks.addAll(fetchedTasks);
+    });
+  }
+
+  Future<void> updateTaskCompletionStatus(
+      String taskName, bool completed) async {
+    //Get a reference to the 'tasks' collection from Firestore
+    CollectionReference tasksCollection = db.collection('tasks');
+
+    //Query firestore for tasks with the given task name
+    QuerySnapshot querySnapshot =
+        await tasksCollection.where('name', isEqualTo: taskName).get();
+
+    //if matching document is found
+    if (querySnapshot.size > 0) {
+      //Getting a reference to the first matching document
+      DocumentSnapshot documentSnapshot = querySnapshot.docs[0];
+
+      await documentSnapshot.reference.update({'completed': completed});
+    }
+
+    setState(() {
+      //find the index of the task in the task list
+      int taskIndex = tasks.indexWhere((task) => task == taskName);
+
+      //Update the corresponding checkbox value in the the checkbox list
+      checkboxes[taskIndex] = completed;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchTasksFromFirestore();
+  }
+
+  void clearInput() {
+    setState(() {
+      nameController.clear();
     });
   }
 
@@ -164,7 +202,8 @@ class _HomePageState extends State<HomePage> {
                                         setState(() {
                                           checkboxes[index] = newValue!;
                                         });
-                                        //To-Do: updateTaskCompletionStatus()
+                                        updateTaskCompletionStatus(
+                                            tasks[index], newValue!);
                                       }),
                                 ),
                                 IconButton(
@@ -222,6 +261,7 @@ class _HomePageState extends State<HomePage> {
                 child: ElevatedButton(
                   onPressed: () {
                     addItemToList();
+                    clearInput();
                   },
                   style: ButtonStyle(
                     backgroundColor: WidgetStatePropertyAll(Colors.blue),

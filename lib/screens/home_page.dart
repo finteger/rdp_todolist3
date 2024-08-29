@@ -91,63 +91,61 @@ class _HomePageState extends State<HomePage> {
                 shrinkWrap: true,
                 itemCount: tasks.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return SingleChildScrollView(
-                    child: Container(
-                      margin: const EdgeInsets.only(top: 3.0),
-                      decoration: BoxDecoration(
-                        color: checkboxes[index]
-                            ? Colors.green.withOpacity(0.7)
-                            : Colors.blue.withOpacity(0.7),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Row(
-                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Icon(
-                              size: 44,
-                              !checkboxes[index]
-                                  ? Icons.manage_history
-                                  : Icons.playlist_add_check_circle,
+                  return Container(
+                    margin: const EdgeInsets.only(top: 3.0),
+                    decoration: BoxDecoration(
+                      color: checkboxes[index]
+                          ? Colors.green.withOpacity(0.7)
+                          : Colors.blue.withOpacity(0.7),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Row(
+                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Icon(
+                            size: 44,
+                            !checkboxes[index]
+                                ? Icons.manage_history
+                                : Icons.playlist_add_check_circle,
+                          ),
+                          SizedBox(width: 18),
+                          Expanded(
+                            child: Text(
+                              '${tasks[index]}',
+                              style: checkboxes[index]
+                                  ? TextStyle(
+                                      decoration: TextDecoration.lineThrough,
+                                      fontSize: 25,
+                                      color: Colors.black.withOpacity(0.5),
+                                    )
+                                  : TextStyle(fontSize: 25),
+                              textAlign: TextAlign.left,
                             ),
-                            SizedBox(width: 18),
-                            Expanded(
-                              child: Text(
-                                '${tasks[index]}',
-                                style: checkboxes[index]
-                                    ? TextStyle(
-                                        decoration: TextDecoration.lineThrough,
-                                        fontSize: 25,
-                                        color: Colors.black.withOpacity(0.5),
-                                      )
-                                    : TextStyle(fontSize: 25),
-                                textAlign: TextAlign.left,
+                          ),
+                          Row(
+                            children: [
+                              Transform.scale(
+                                scale: 1.4,
+                                child: Checkbox(
+                                    value: checkboxes[index],
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        checkboxes[index] = newValue!;
+                                      });
+                                      //To-Do: updateTaskCompletionStatus()
+                                    }),
                               ),
-                            ),
-                            Row(
-                              children: [
-                                Transform.scale(
-                                  scale: 1.4,
-                                  child: Checkbox(
-                                      value: checkboxes[index],
-                                      onChanged: (newValue) {
-                                        setState(() {
-                                          checkboxes[index] = newValue!;
-                                        });
-                                        //To-Do: updateTaskCompletionStatus()
-                                      }),
-                                ),
-                                const IconButton(
-                                  color: Colors.black,
-                                  iconSize: 30,
-                                  icon: Icon(Icons.delete),
-                                  onPressed: null,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+                              const IconButton(
+                                color: Colors.black,
+                                iconSize: 30,
+                                icon: Icon(Icons.delete),
+                                onPressed: null,
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   );
